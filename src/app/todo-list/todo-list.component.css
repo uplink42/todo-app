@@ -1,0 +1,15 @@
+tr {
+    vertical-align: middle;
+}
+
+img {
+    cursor: pointer;
+}
+
+.done {
+    text-decoration: line-through;
+}
+
+button {
+    width: 100%;
+}

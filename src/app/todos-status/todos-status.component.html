@@ -1,0 +1,14 @@
+<div class="status mt-5">
+  <h3>Status</h3>
+  <p *ngIf="highPriorityTodosCount > 0">
+    You have {{ highPriorityTodosCount }} important tasks!
+  </p>
+
+  <p *ngIf="undoneTodosCount > 0">
+    You have {{ undoneTodosCount }} undone tasks!
+  </p>
+
+  <p *ngIf="undoneTodosCount === 0 && highPriorityTodosCount === 0">
+    No important tasks to do!
+  </p>
+</div>

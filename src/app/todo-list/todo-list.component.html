@@ -1,0 +1,81 @@
+<div class="table-wrapper">
+  <h3>Todo List</h3>
+  <table class="table table-hover">
+    <tbody>
+      <ng-container *ngIf="todos.length; else empty">
+        <tr
+          *ngFor="let todo of todos; trackBy: trackByFn"
+          [ngClass]="{
+            'table-danger': !todo.done && todo.priority === 'High',
+            'table-warning': !todo.done && todo.priority === 'Medium'
+          }"
+        >
+          <td width="20px">
+            <input
+              #checkbox
+              class="form-check-input"
+              type="checkbox"
+              [ngModel]="todo.done"
+              (change)="toggleDone.emit(todo)"
+            />
+          </td>
+          <td [class.done]="todo.done">
+            {{ todo.description }}
+          </td>
+
+          <td width="125px" [class.done]="todo.done">
+            <ng-container
+              *ngIf="isEditingPriority[todo.id] && !todo.done; else text"
+            >
+              <select
+                #select
+                class="form-select"
+                name="priority"
+                [ngModel]="todo.priority"
+                (change)="handleChangePriority(todo, $any(select.value))"
+                required
+              >
+                <option
+                  *ngFor="let priority of priorities"
+                  [value]="priority.id"
+                >
+                  {{ priority.id }}
+                </option>
+              </select>
+            </ng-container>
+
+            <ng-template #text>
+              <div (click)="toggleEditPriorityState(todo.id)">
+                {{ todo.priority }}
+              </div>
+            </ng-template>
+          </td>
+
+          <td width="40px">
+            <img
+              *ngIf="!todo.done"
+              [src]="
+                todo.pinned
+                  ? 'assets/iconmonstr-star-3.svg'
+                  : 'assets/iconmonstr-star-thin.svg'
+              "
+              (click)="togglePinned.emit(todo)"
+            />
+          </td>
+
+          <td width="100px">
+            <button class="btn btn-danger" (click)="delete.emit(todo)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </ng-container>
+
+      <ng-template #empty>
+        <tr colspan="4">
+          No todos yet!
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+</div>

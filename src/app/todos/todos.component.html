@@ -1,0 +1,29 @@
+<div class="row">
+  <div *ngIf="todos$ | async as todos" class="col-12 col-lg-8">
+    <app-todo-list
+      [todos]="todos"
+      (togglePinned)="togglePinned($event)"
+      (toggleDone)="toggleDone($event)"
+      (changePriority)="changePriority($event)"
+      (delete)="deleteTodo($event)"
+    ></app-todo-list>
+
+    <app-new-todo (created)="createTodo($event)"></app-new-todo>
+
+    <app-todos-status
+      *ngIf="{
+        highPriority: highPriorityTodosCount$ | async,
+        undone: undoneTodosCount$ | async
+      } as status"
+      [highPriorityTodosCount]="status.highPriority!"
+      [undoneTodosCount]="status.undone!"
+    ></app-todos-status>
+  </div>
+
+  <div class="col-12 col-lg-4">
+    <app-todo-history
+      *ngIf="history$ | async as history"
+      [messages]="history"
+    ></app-todo-history>
+  </div>
+</div>
