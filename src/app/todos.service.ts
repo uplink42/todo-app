@@ -9,11 +9,9 @@ const MAX_HISTORY_LENGTH = 10;
 })
 export class TodosService {
   private readonly todos = new BehaviorSubject<Todo[]>([]);
-
   readonly todos$ = this.todos.asObservable();
 
   private readonly todoHistory = new BehaviorSubject<string[]>([]);
-
   readonly todoHistory$ = this.todoHistory.asObservable();
 
   initialize() {

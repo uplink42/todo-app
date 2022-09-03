@@ -1,5 +1,10 @@
 <div class="row">
   <div *ngIf="todos$ | async as todos" class="col-12 col-lg-8">
+    <app-todo-search
+      [todos]="todos"
+      (search)="searchTodos($event)"
+    ></app-todo-search>
+
     <app-todo-list
       [todos]="todos"
       (togglePinned)="togglePinned($event)"

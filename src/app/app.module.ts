@@ -10,9 +10,10 @@ import { TodoHistoryComponent } from './todo-history/todo-history.component';
 import { TodosComponent } from './todos/todos.component';
 import { ReversePipe } from './reverse.pipe';
 import { TodosStatusComponent } from './todos-status/todos-status.component';
+import { TodoSearchComponent } from './todo-search/todo-search.component';
 
 @NgModule({
-  declarations: [AppComponent, TodoListComponent, NewTodoComponent, TodoHistoryComponent, TodosComponent, ReversePipe, TodosStatusComponent],
+  declarations: [AppComponent, TodoListComponent, NewTodoComponent, TodoHistoryComponent, TodosComponent, ReversePipe, TodosStatusComponent, TodoSearchComponent],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],

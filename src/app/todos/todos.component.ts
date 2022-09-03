@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { map } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, switchMap } from 'rxjs';
 import { TodoForm, Todo, TodoPriority } from '../todo.model';
 import { TodosService } from '../todos.service';
 import { deepClone } from '../utils';
@@ -11,7 +11,17 @@ import { deepClone } from '../utils';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodosComponent implements OnInit {
-  todos$ = this.todoService.todos$.pipe(map((todos) => deepClone(todos)));
+  private readonly todosFilterRefresh$ = new BehaviorSubject<string>('');
+
+  todos$ = combineLatest([
+    this.todosFilterRefresh$,
+    this.todoService.todos$,
+  ]).pipe(
+    map(([term, todos]) =>
+      todos.filter((todo) => todo.description.includes(term))
+    ),
+    map((todos) => deepClone(todos))
+  );
 
   history$ = this.todoService.todoHistory$.pipe(
     map((history) => deepClone(history))
@@ -52,5 +62,9 @@ export class TodosComponent implements OnInit {
 
   deleteTodo(todo: Todo) {
     this.todoService.deleteTodo(todo);
+  }
+
+  searchTodos(term: string) {
+    this.todosFilterRefresh$.next(term);
   }
 }
