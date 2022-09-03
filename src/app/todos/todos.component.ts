@@ -11,12 +11,9 @@ import { deepClone } from '../utils';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TodosComponent implements OnInit {
-  private readonly todosFilterRefresh$ = new BehaviorSubject<string>('');
+  todosSearch$ = new BehaviorSubject<string>('');
 
-  todos$ = combineLatest([
-    this.todosFilterRefresh$,
-    this.todoService.todos$,
-  ]).pipe(
+  todos$ = combineLatest([this.todosSearch$, this.todoService.todos$]).pipe(
     map(([term, todos]) =>
       todos.filter((todo) => todo.description.includes(term))
     ),
@@ -46,6 +43,7 @@ export class TodosComponent implements OnInit {
 
   createTodo(todo: TodoForm) {
     this.todoService.addTodo(todo);
+    this.clearSearchTerm();
   }
 
   togglePinned(todo: Todo) {
@@ -65,6 +63,10 @@ export class TodosComponent implements OnInit {
   }
 
   searchTodos(term: string) {
-    this.todosFilterRefresh$.next(term);
+    this.todosSearch$.next(term);
+  }
+
+  clearSearchTerm() {
+    this.todosSearch$.next('');
   }
 }

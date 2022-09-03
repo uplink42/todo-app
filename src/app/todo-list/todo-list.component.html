@@ -73,7 +73,11 @@
 
       <ng-template #empty>
         <tr colspan="4">
-          No todos yet!
+          No todos found!
+
+          <ng-container *ngIf="searchTerm">
+            <span (click)="clearSearch.emit()">Clear search?</span>
+          </ng-container>
         </tr>
       </ng-template>
     </tbody>

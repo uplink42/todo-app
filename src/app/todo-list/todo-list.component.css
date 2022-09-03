@@ -10,6 +10,11 @@ img {
     text-decoration: line-through;
 }
 
-button {
+.btn-danger {
     width: 100%;
+}
+
+span {
+    text-decoration: underline;
+    cursor: pointer;
 }

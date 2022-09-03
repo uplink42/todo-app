@@ -9,9 +9,9 @@ import { Todo } from '../todo.model';
 export class TodoSearchComponent implements OnInit {
   @Input() todos: Todo[] = [];
 
-  @Output() search = new EventEmitter<string>();
+  @Input() searchTerm = '';
 
-  searchTerm = '';
+  @Output() search = new EventEmitter<string>();
 
   constructor() {}
 

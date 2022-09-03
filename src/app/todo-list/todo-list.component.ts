@@ -18,9 +18,13 @@ import { trackByFn } from '../utils';
 export class TodoListComponent implements OnInit {
   @Input() todos!: Todo[];
 
+  @Input() searchTerm = '';
+
   @Output() togglePinned = new EventEmitter<Todo>();
 
   @Output() toggleDone = new EventEmitter<Todo>();
+
+  @Output() clearSearch = new EventEmitter<void>();
 
   @Output() changePriority = new EventEmitter<{
     todo: Todo;
